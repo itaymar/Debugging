@@ -16,20 +16,25 @@ Point::Point(int x, int y)
 
 Point::Point(const Point& other)
 {
-	delete _coord;
-	_coord = other._coord;
+	delete[] _coord;
+	_coord = new int[2];
+	memcpy(_coord, other._coord, sizeof(int) * 2);
 }
 
 Point::~Point()
 {
-	delete _coord;
+	delete[] _coord;
 }
 
 Point& Point::operator=(const Point& other)
 {
-	delete _coord;
+	if (this->_coord == other._coord)
+	{
+		return *this;
+	}
+	delete[] _coord;
 	_coord = new int[2];
-	memcpy(_coord, other._coord, 2);
+	memcpy(_coord, other._coord, sizeof(int) * 2);
 	return *this;
 }
 
@@ -46,6 +51,7 @@ int Point::getY() const
 
 std::ostream& operator<<(std::ostream& os, const Point& p)
 {
+
 	os << "(" << p._coord[0] << "," << p._coord[1] << ")";
 	return os;
 }

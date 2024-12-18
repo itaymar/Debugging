@@ -1,21 +1,21 @@
 #include "part2.h"
 #include <iostream>
 #include <stdexcept>
+#define BUF_SIZE 20
 
 char* safe_string_copy(char* dest, unsigned int destsize, char* src)
 {
-	unsigned int srcsize = (unsigned int)strlen(src);
+	unsigned int srcsize = (unsigned int)strlen(src) + 1;
 	if (srcsize >= destsize)
 		throw std::overflow_error("possible buffer overflow");
 
 	char* ret = dest;
-	for (unsigned int i = 0; i < srcsize * sizeof(*src); i++)
+	for (unsigned int i = 0; i < srcsize; i++)
 		*dest++ = *src++;
+
 	return ret;
 }
 
-
-#define BUF_SIZE 20
 void part2()
 {
 	char password[] = "secret";
